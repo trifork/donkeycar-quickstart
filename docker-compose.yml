@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  donkey-editor:
+    image: ${DOCKER_REGISTRY}donkey-editor
+    build:
+        context: .
+        dockerfile: Dockerfile
+    volumes:
+      - ./models:/app/car/models
+      - ./data:/app/car/data
+    ports:
+      - 8888:8888
