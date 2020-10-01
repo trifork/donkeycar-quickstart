@@ -34,6 +34,10 @@ WORKDIR /app/car
 
 SHELL ["/bin/bash", "-c"]
 
+ADD requirements.txt .
+
+RUN pip install -r requirements.txt
+
 # start the jupyter notebook
 CMD /opt/conda/bin/jupyter notebook --no-browser --ip 0.0.0.0 --port 8888 --allow-root --notebook-dir=/app/car
 
