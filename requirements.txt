@@ -2,3 +2,4 @@ numpy==1.21.0
 Flask==0.10.1
 itsdangerous==2.0.1
 werkzeug==2.0.3
+donkeycar @ git+https://github.com/jolufan/donkeycar_test.git@7ac4ec2de32b84a81c3c7d2fddca8c8a391120e8

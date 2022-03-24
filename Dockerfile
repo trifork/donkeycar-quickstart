@@ -10,6 +10,7 @@ RUN mkdir git
 WORKDIR /app/git
 
 # Get custom made env-dependencies from jolufan Github.
+# could potentially only fetch the yml file
 RUN git clone https://github.com/jolufan/donkeycar_test
 
 WORKDIR /app/git/donkeycar_test
