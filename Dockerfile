@@ -1,9 +1,7 @@
-FROM continuumio/miniconda3:4.8.2
+FROM condaforge/mambaforge:4.9.2-5 as mamba
 
-LABEL version="1"
-LABEL maintaner="Christoffer Bech (cbe@trifork)"
-
-RUN /opt/conda/bin/conda install jupyter -y
+LABEL version="2"
+LABEL maintaner="Jonathan Lüdemann (jolu@trifork)"
 
 WORKDIR /app
 
@@ -11,19 +9,19 @@ RUN mkdir git
 
 WORKDIR /app/git
 
-# Get the latest donkeycar from Github.
-RUN git clone https://github.com/autorope/donkeycar
+# Get custom made env-dependencies from jolufan Github.
+RUN git clone https://github.com/jolufan/donkeycar_test
 
-WORKDIR /app/git/donkeycar
+WORKDIR /app/git/donkeycar_test
 
 # Checkout git master
 RUN git checkout master
 
 # Install donkey envs
-RUN conda env create -f ./install/envs/ubuntu.yml --force
+RUN mamba env create -f install/envs/ubuntu.yml
 
 # Set the default docker build shell to run as the conda wrapped process
-SHELL ["conda", "run", "-n", "donkey", "/bin/bash", "-c"]
+SHELL ["mamba", "run", "-n", "donkey", "/bin/bash", "-c"]
 
 RUN pip install -e .[pc]
 
@@ -38,8 +36,10 @@ ADD requirements.txt .
 
 RUN pip install -r requirements.txt
 
-# start the jupyter notebook
-CMD /opt/conda/bin/jupyter notebook --no-browser --ip 0.0.0.0 --port 8888 --allow-root --notebook-dir=/app/car
+COPY . .
 
-# Port for jupyter notebook
-EXPOSE 8888
+# Start flask server endpoint to train received data
+# Start with docker run -d -p 5000:5000 <name of docker image>
+ENTRYPOINT [ "python" ]
+
+CMD ["./src/app.py" ]
