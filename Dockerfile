@@ -1,37 +1,15 @@
-FROM condaforge/mambaforge:4.9.2-5 as mamba
+FROM python:3.7-slim-buster
 
 LABEL version="2"
 LABEL maintaner="Jonathan Lüdemann (jolu@trifork)"
 
+RUN apt-get update && apt-get install -y git
+
 WORKDIR /app
 
-RUN mkdir git
-
-WORKDIR /app/git
-
-# Get custom made env-dependencies from jolufan Github.
-# could potentially only fetch the yml file
-RUN git clone https://github.com/jolufan/donkeycar_test
-
-WORKDIR /app/git/donkeycar_test
-
-# Checkout git master
-RUN git checkout master
-
-# Install donkey envs
-RUN mamba env create -f install/envs/ubuntu.yml
-
-# Set the default docker build shell to run as the conda wrapped process
-SHELL ["mamba", "run", "-n", "donkey", "/bin/bash", "-c"]
-
-RUN pip install -e .[pc]
-
-# Create donkey car
-RUN donkey createcar --path ./../../car
-
-WORKDIR /app/car
-
 SHELL ["/bin/bash", "-c"]
+
+RUN apt-get install ffmpeg libsm6 libxext6  -y
 
 ADD requirements.txt .
 
