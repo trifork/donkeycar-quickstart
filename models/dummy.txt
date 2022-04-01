@@ -1,1 +1,0 @@
-Denne fil er kun inkluderet i git for at oprette mappen "models"
