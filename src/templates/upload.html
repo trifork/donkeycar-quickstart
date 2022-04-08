@@ -29,31 +29,41 @@
          var input = document.querySelector('input[type="file"]')
          var loader = document.getElementById('loader')
          var submitButton = document.querySelector('button[type="submit"]')
+         var file_upload_paragraph = document.querySelector('form p')
 
          submitButton.innerHTML = "Training"
          submitButton.disabled = true
+         input.disabled = true
+         loader.classList.toggle('show')
+
+         function resetForm() {
+            loader.classList.toggle('show')
+            submitButton.innerHTML = "Train"
+            submitButton.disabled = false
+            input.disabled = false
+         }
 
          var formData = new FormData();
          var fileList = input.files
          for (var i = 0; i < fileList.length; i++) {
             formData.append('files[]', fileList[i]);
          }
-         loader.classList.toggle('show')
+         
          fetch('/train', {
             method: 'POST',
             body: formData,
             })
             .then(response => response.blob())
             .then(blob => {
+               var file = new File([blob], "mypilot.h5");
                var file = window.URL.createObjectURL(blob);
                window.location.assign(file);
                console.log('Success:', data);
-               loader.classList.toggle('show')
-               submitButton.innerHTML = "Train"
-               submitButton.disabled = false
+               resetForm()
             })
             .catch((error) => {
                console.error('Error:', error);
+               resetForm()
             }
          );
       }
