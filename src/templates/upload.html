@@ -3,10 +3,11 @@
    <head>
       <title>Donkeycar Training</title>
       <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+      <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     </head>
    <body>
-      <div id="pageloader">
-         <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/2D_data_training_SOM.gif" alt="processing..." />
+      <div id="loader">
+         <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/2D_data_training_SOM.gif" alt="Loader when training">
       </div>
 
       <form action = "http://localhost:5000/train" method = "POST"
@@ -14,19 +15,54 @@
          <input type = "file" name = "file" multiple/>
          <p>Drag your files here or click in this area.</p>
          <button type="submit">Train</button>
-      </form>   
+      </form>
    </body>
    <script>
 
-      function file_input_eventlistener(event) {
+      function file_input_event_handler(event) {
          var file_upload_paragraph = document.querySelector('form p')
          file_upload_paragraph.innerHTML = "Files chosen! Ready to train"
+      }
 
+      function form_submission_event_handler(event) {
+         event.preventDefault();
+         var input = document.querySelector('input[type="file"]')
+         var loader = document.getElementById('loader')
+         var submitButton = document.querySelector('button[type="submit"]')
+
+         submitButton.innerHTML = "Training"
+         submitButton.disabled = true
+
+         var formData = new FormData();
+         var fileList = input.files
+         for (var i = 0; i < fileList.length; i++) {
+            formData.append('files[]', fileList[i]);
+         }
+         loader.classList.toggle('show')
+         fetch('/train', {
+            method: 'POST',
+            body: formData,
+            })
+            .then(response => response.blob())
+            .then(blob => {
+               var file = window.URL.createObjectURL(blob);
+               window.location.assign(file);
+               console.log('Success:', data);
+               loader.classList.toggle('show')
+               submitButton.innerHTML = "Train"
+               submitButton.disabled = false
+            })
+            .catch((error) => {
+               console.error('Error:', error);
+            }
+         );
       }
 
       (function() {
          var file_input = document.querySelector('form input')
-         file_input.addEventListener('change', file_input_eventlistener)
+         file_input.addEventListener('change', file_input_event_handler)
+         var form = document.querySelector('form')
+         form.addEventListener("submit", form_submission_event_handler)
       })();
    </script>
 </html>

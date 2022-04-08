@@ -7,7 +7,7 @@ services:
         context: .
         dockerfile: Dockerfile
     volumes:
-      - ./models:/app/car/models
-      - ./data:/app/car/data
+      - ./models:/app/src/mycar/models
+      - ./data:/app/src/mycar/data
     ports:
       - 8888:8888
