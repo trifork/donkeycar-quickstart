@@ -12,8 +12,6 @@ from werkzeug.utils import secure_filename
 from donkeycar.pipeline.training import train
 from donkeycar.management.base import load_config, CreateCar
 
-
-
 def get_random_token():
     """
     Creates a cryptographically-secure, URL-safe string

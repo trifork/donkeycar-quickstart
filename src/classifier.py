@@ -59,7 +59,14 @@ class DonkeyCarClassifier:
         log(cfg)
         log('Train uploaded zip file')
         # python base.py train --tub ../../mycar/data/tub_1_20-02-22_new/ --model ../../mycar/models/mypilot.h5 --config=../../mycar/config.py
-        history = train(cfg=cfg, tub_paths=self.__tub_file_path, model=os.path.join(self.model_path, secure_filename(self.__model_file_name)), model_type = None, transfer=None, comment=None)
+        try:
+            history = train(cfg=cfg, tub_paths=self.__tub_file_path, model=os.path.join(self.model_path, secure_filename(self.__model_file_name)), model_type = None, transfer=None, comment=None)
+        except Exception as e:
+            from data_format import convert_to_tub_v2
+            legacy_tub_path = self.__data_path
+            self.__data_path = self.__data_path + '_new'
+            convert_to_tub_v2(legacy_tub_path, self.__data_path)
+            history = train(cfg=cfg, tub_paths=self.__tub_file_path, model=os.path.join(self.model_path, secure_filename(self.__model_file_name)), model_type = None, transfer=None, comment=None)
 
     @property
     def model_location(self) -> String:
