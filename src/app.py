@@ -47,7 +47,10 @@ async def train_model():
    donkeyCarClassifier.set_files(files=files)
    donkeyCarClassifier.train()
 
-   return send_file(donkeyCarClassifier.model_location, as_attachment=True, download_name=model_file_name)
+   response = send_file(donkeyCarClassifier.model_location, as_attachment=True, download_name=model_file_name)
+   response.headers["x-filename"] = model_file_name   
+   response.headers["Access-Control-Expose-Headers"] = 'x-filename'
+   return response
 
 @app.route('/myconfig', methods= ['GET'])
 def get_basic_config():

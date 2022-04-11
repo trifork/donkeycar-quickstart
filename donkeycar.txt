@@ -1,0 +1,1 @@
+donkeycar @ git+https://github.com/jolufan/donkeycar_test.git

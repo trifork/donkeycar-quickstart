@@ -12,8 +12,10 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get install ffmpeg libsm6 libxext6  -y
 
 ADD requirements.txt .
+ADD donkeycar.txt .
 
 RUN pip install -r requirements.txt
+RUN pip install -r donkeycar.txt
 
 COPY . .
 

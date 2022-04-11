@@ -62,7 +62,7 @@ def convert_to_tub_v2(paths, output_path):
                   previous_index += 1
                output_tub.delete_records(delete_list)
             record_num = record_num + 1
-            print('Converted ' + record_num + ' record(s)')
+            print(f'Converted {record_num} record(s)')
          except Exception as exception:
                print(f'Ignoring record path {record_path}\n', exception)
                traceback.print_exc()

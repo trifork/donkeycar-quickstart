@@ -31,16 +31,24 @@
          var submitButton = document.querySelector('button[type="submit"]')
          var file_upload_paragraph = document.querySelector('form p')
 
-         submitButton.innerHTML = "Training"
-         submitButton.disabled = true
-         input.disabled = true
-         loader.classList.toggle('show')
+         function showLoader() {
+            submitButton.innerHTML = "Training"
+            submitButton.disabled = true
+            input.disabled = true
+            loader.classList.toggle('show')
+         }
 
          function resetForm() {
             loader.classList.toggle('show')
             submitButton.innerHTML = "Train"
             submitButton.disabled = false
             input.disabled = false
+            input.value = ''
+
+            if(!/safari/i.test(navigator.userAgent)){
+               input.type = ''
+               input.type = 'file'
+            }
          }
 
          var formData = new FormData();
@@ -49,23 +57,30 @@
             formData.append('files[]', fileList[i]);
          }
          
-         fetch('/train', {
-            method: 'POST',
-            body: formData,
-            })
-            .then(response => response.blob())
-            .then(blob => {
-               var file = new File([blob], "mypilot.h5");
-               var file = window.URL.createObjectURL(blob);
-               window.location.assign(file);
-               console.log('Success:', data);
-               resetForm()
-            })
-            .catch((error) => {
-               console.error('Error:', error);
-               resetForm()
-            }
-         );
+         if(fileList.length > 0){
+            showLoader()
+            fetch('/train', {
+                  method: 'POST',
+                  body: formData,
+               })
+               .then(response => response.blob())
+               .then(blob => {
+
+                  // Create anchor without attaching it to DOM
+                  // Use it to download the receive file with specific filename
+                  var a = document.createElement("a");
+                  a.href = URL.createObjectURL(blob);
+                  a.setAttribute("download", "mypilot.h5");
+                  a.click();
+                  console.log('Success:');
+
+                  resetForm()
+               })
+               .catch((error) => {
+                  console.error('Error:', error);
+                  resetForm()
+               });
+         }
       }
 
       (function() {

@@ -63,9 +63,11 @@ class DonkeyCarClassifier:
             history = train(cfg=cfg, tub_paths=self.__tub_file_path, model=os.path.join(self.model_path, secure_filename(self.__model_file_name)), model_type = None, transfer=None, comment=None)
         except Exception as e:
             from data_format import convert_to_tub_v2
-            legacy_tub_path = self.__data_path
-            self.__data_path = self.__data_path + '_new'
-            convert_to_tub_v2(legacy_tub_path, self.__data_path)
+            legacy_tub_path = self.__tub_file_path
+            self.__tub_file_path = self.__tub_file_path + '_new'
+
+            #python convert_to_tub_v2.py --tub=/Users/jolu/Repos/donkeycar/mycar/data/tub_1_20-02-22 --output=/Users/jolu/Repos/donkeycar/mycar/data/tub_1_20-02-22_new
+            convert_to_tub_v2(legacy_tub_path, self.__tub_file_path)
             history = train(cfg=cfg, tub_paths=self.__tub_file_path, model=os.path.join(self.model_path, secure_filename(self.__model_file_name)), model_type = None, transfer=None, comment=None)
 
     @property

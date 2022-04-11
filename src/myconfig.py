@@ -129,7 +129,7 @@
 # BATCH_SIZE = 128                #how many records to use when doing one pass of gradient decent. Use a smaller number if your gpu is running out of memory.
 # TRAIN_TEST_SPLIT = 0.8          #what percent of records to use for training. the remaining used for validation.
 # MAX_EPOCHS = 100                #how many times to visit all records of your data
-# SHOW_PLOT = True                #would you like to see a pop up display of final loss?
+SHOW_PLOT = False                #would you like to see a pop up display of final loss?
 # VERBOSE_TRAIN = True            #would you like to see a progress bar with text during training?
 # USE_EARLY_STOP = True           #would you like to stop the training if we see it's not improving fit?
 # EARLY_STOP_PATIENCE = 5         #how many epochs to wait before no improvement
