@@ -11,14 +11,13 @@ from flask import Flask, render_template, request, send_file, redirect, url_for
 from werkzeug.utils import secure_filename
 from donkeycar.pipeline.training import train
 from donkeycar.management.base import load_config, CreateCar
+from app import app
 
 def get_random_token():
     """
     Creates a cryptographically-secure, URL-safe string
     """
     return secrets.token_urlsafe(16)
-
-app = Flask(__name__)
 
 @app.route('/')
 def upload():
