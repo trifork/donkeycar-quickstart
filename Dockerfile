@@ -21,6 +21,4 @@ WORKDIR /app
 
 # Start flask server endpoint through Gunicorn to train received data
 # Start with docker run -d -p 5000:5000 <name of docker image>
-# Need elevated permissions: u+rwx 
-# docker: Error response from daemon: OCI runtime create failed: container_linux.go:380: starting container process caused: exec: "./gunicorn.sh": permission denied: unknown.
 ENTRYPOINT ["./gunicorn.sh"]
