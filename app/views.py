@@ -40,16 +40,13 @@ async def train_model():
    files = request.files.getlist('files[]')
    
    if not files:
-      log("Not files")
+      log("No files")
       return redirect(url_for('upload'))
    
    donkeyCarClassifier.set_files(files=files)
    donkeyCarClassifier.train()
 
-   response = send_file(donkeyCarClassifier.model_location, as_attachment=True, download_name=model_file_name)
-   response.headers["x-filename"] = model_file_name   
-   response.headers["Access-Control-Expose-Headers"] = 'x-filename'
-   return response
+   return send_file(donkeyCarClassifier.model_location, as_attachment=True, download_name=model_file_name)
 
 @app.route('/myconfig', methods= ['GET'])
 def get_basic_config():

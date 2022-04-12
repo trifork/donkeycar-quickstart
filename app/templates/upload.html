@@ -7,7 +7,7 @@
     </head>
    <body>
       <div id="loader">
-         <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/2D_data_training_SOM.gif" alt="Loader when training">
+         <img src="{{ url_for('static', filename='2D_data_training_SOM.gif') }}" alt="Loader when training">
       </div>
 
       <form action = "http://localhost:5000/train" method = "POST"
