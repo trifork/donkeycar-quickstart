@@ -1,37 +1,27 @@
-# Trifork Donkeycar Quick start
+# DonkeyCar Documentation
 
-## Quick start
+This document will guide you in installing the necessary software on your pc in order to train a model for the car and help you drive your car and collect data for training.
 
-Install docker
+## Time constraints
 
-Kør docker-compose start kommando
+Training a ML model for the car requires a lot of resources, so we recommend that you find out who in your team has the most powerful pc, and install the software for training on that pc.
 
-```bash
-docker-compose up --build
-```
+While the software is being installed, you can take your car for a ride on the track, so that you get acquainted with it and with driving it with the controller. Once you are ready, you can begin to collect data for training.
 
-NB: Den nedenstående besked er der lang tid, men den kommer videre, bare vent.
+## 1. Install software on host pc (the powerful pc)
 
-```bash
-#
-# To activate this environment, use
-#
-#     $ conda activate donkey
-#
-# To deactivate an active environment, use
-#
-#     $ conda deactivate
-```
+### 1.1 Docker
 
-Når nedenstående beskeden kommer er i terminalen er miljøet klar.
+To install docker, follow the instruction from https://docs.docker.com/get-docker/
 
-```bash
-donkey-editor_1  |     To access the notebook, open this file in a browser:
-donkey-editor_1  |         file:///root/.local/share/jupyter/runtime/nbserver-1-open.html
-donkey-editor_1  |     Or copy and paste one of these URLs:
-donkey-editor_1  |         http://16a96ecdd75d:8888/?token=f3114cd69238806a9af1d229a3109a2856644eec71bc4537
-donkey-editor_1  |      or http://127.0.0.1:8888/?token=f3114cd69238806a9af1d229a3109a2856644eec71bc4537
-donkey-editor_1  | [I 17:40:56.334 NotebookApp] 302 GET /?token=f3114cd69238806a9af1d229a3109a2856644eec71bc4537 (172.18.0.1) 0.88ms
-```
+### 1.2 Environment
 
-Stop editoren ved at press Ctrl+C i terminalen
+To setup and get started follow the following steps:
+
+- git clone https://github.com/trifork/donkeycar-quickstart
+- cd donkeycar-quickstart
+- docker image build -t donkey_train_web_api .
+- docker run -p 5000:5000 -d donkey_train_web_api
+
+Nu kører en hjemmeside lokalt på din computer. 
+
