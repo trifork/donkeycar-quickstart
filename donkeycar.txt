@@ -1,1 +1,1 @@
-donkeycar @ git+https://github.com/jolufan/donkeycar_test.git
+donkeycar @ git+https://github.com/trifork/simplified_donkeycar.git
